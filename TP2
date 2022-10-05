@@ -1,11 +1,43 @@
-Curso de Python para Economistas
-Trabajo Practico 2
+#Este bloque de código les importa los datos. No tienen que modificar nada en el.
 
-Fecha de entrega:
-Sábado 08/10 a las 23:59hs
+#trabajaremos con datos reales de la ciudad de Buenos Aires, dercargados de:
+#https://cdn.buenosaires.gob.ar/datosabiertos/datasets/salud/casos-covid-19/casos_covid19.csv
 
-Modalidad de entrega y trabajo:
-Se debe entregar por mensaje privado de slack copiando a los 5 profesores y a los 3 miembros del equipo
-El archivo se debe llamar PythEcon2022_tp2_APELLIDO1_APELLIDO2_APELLIDO3.ipynb
-Se debe trabajar en grupos de a 3 personas (si alguien no logra encontrar grupo escribanos para ponerlo en contacto con otros compañeros)
+#Asegurense de correr este jupyter notebook en la misma carpeta donde tengan 
+#guardados los tres archivos csv que les dejamos en el repositorio.
 
+ARCHIVOS =  ['infectados0.csv', 'infectados1.csv', 'recuperados.csv']
+
+def obtengo_infectados_por_comuna(archivos=ARCHIVOS):
+    '''
+    Esta funcion devuelve comuna, genero y edad de las personas infectadas de 
+    covid en una determinada fecha
+    
+    Input:
+        tres archivos CSV con personas infectadas en la última semana, hace una
+        semana y hace más de dos semenas (a este grupo los llamamos recuperados)
+        
+    Output:
+        Tupla con tres listas de peronas en los tres estados I0, I1, R.
+        infectados0 (lista): contiene una tupla por c/persona infectada esta 
+            semana. Cada tupla tiene comuna, genero y edad de cada persona.
+        infectados1 (lista): contiene una tupla por c/persona infectada hace una 
+            semanas. Cada tupla tiene comuna, genero y edad de cada persona.
+        recuperados (lista): contiene una tupla por c/persona infectada hace dos 
+            semanas. Cada tupla tiene comuna, genero y edad de cada persona.
+    '''
+    listas_personas = []
+
+    for archivo in archivos:
+        with open(archivo, 'r') as f:
+            filas = csv.reader(f)
+
+            personas = []
+            for fila in filas:
+                personas.append((fila[0], fila[1], fila[2]))
+
+        listas_personas.append(personas)
+    
+    infectados0, infectados1, recuperados = listas_personas
+    
+    return (infectados0, infectados1, recuperados)  
